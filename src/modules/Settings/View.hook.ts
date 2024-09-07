@@ -26,7 +26,7 @@ const useView = () => {
   const timeEndList = generateTimeSlots(
     7 * 60,
     19 * 60,
-    selectedDuration?.duration || 0
+    selectedDuration?.duration || 30
   );
 
   return {
