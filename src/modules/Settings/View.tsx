@@ -39,6 +39,7 @@ const Scheduler = () => {
                 list={DAY_LIST}
                 timeStart={timeList}
                 timeEnd={timeEndList}
+                data={scheduleDay}
               />
             </div>
           </dl>

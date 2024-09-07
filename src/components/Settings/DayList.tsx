@@ -7,20 +7,32 @@ interface DayListType {
   timeStart: TimeListType;
   timeEnd: TimeListType;
   onChange: (data: ScheduleDay) => void;
+  data: Record<string, ScheduleDay>;
 }
-const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
+const DayList = ({ data, list, timeStart, timeEnd, onChange }: DayListType) => {
   return (
     <>
       {list.map((item) => {
         const { value } = item;
+        const {
+          timeStart: currentStart,
+          timeEnd: currentEnd,
+          checked: currentChecked,
+        } = data[item.value];
+
         return (
           <div className="columns-settings py-2">
             <div className="flex items-center">
               <input
                 id={`checked-checkbox-${value}`}
                 type="checkbox"
+                checked={currentChecked}
                 onChange={() => {
-                  onChange({ day: item.value, timeStart: "", timeEnd: "" });
+                  onChange({
+                    ...data[item.value],
+                    day: value,
+                    checked: true,
+                  });
                 }}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
@@ -38,9 +50,10 @@ const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
                   <div>
                     <select
                       id="countries"
+                      value={currentStart}
                       onChange={(e) => {
-                        console.log(e.target.value);
                         onChange({
+                          ...data[item.value],
                           day: value,
                           timeStart: e.target.value,
                           timeEnd: "",
@@ -48,10 +61,18 @@ const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
                       }}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option selected>Select Time</option>
+                      <option>Select Time</option>
                       {timeStart.map((item) => {
                         const { value, time } = item;
-                        return <option value={value}>{time}</option>;
+
+                        return (
+                          <option
+                            value={value}
+                            selected={value === currentStart}
+                          >
+                            {time}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>
@@ -59,9 +80,11 @@ const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
                   <div>
                     <select
                       id="countries"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      disabled
+                      value={currentEnd}
+                      className="bg-gray-50 disabled border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
-                      <option selected>Select Time</option>
+                      <option>End Time</option>
                       {timeEnd.map((item) => {
                         const { value, time } = item;
                         return <option value={value}>{time}</option>;
@@ -70,23 +93,36 @@ const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <svg
-                    className="w-6 h-6 text-gray-800 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                  <div
+                    onClick={() => {
+                      onChange({
+                        ...data[item.value],
+                        day: value,
+                        timeStart: "",
+                        timeEnd: "",
+                        checked: false,
+                      });
+                    }}
                   >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
+                    <svg
+                      className="w-6 h-6 text-gray-800 dark:text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                      />
+                    </svg>
+                  </div>
+
                   <svg
                     className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
