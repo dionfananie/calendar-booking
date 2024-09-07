@@ -8,17 +8,15 @@ interface DayListType {
   timeEnd: TimeListType;
   onChange: (data: ScheduleDay) => void;
   data: Record<string, ScheduleDay>;
+  duration: number;
 }
 const DayList = ({ data, list, timeStart, timeEnd, onChange }: DayListType) => {
   return (
     <>
       {list.map((item) => {
         const { value } = item;
-        const {
-          timeStart: currentStart,
-          timeEnd: currentEnd,
-          checked: currentChecked,
-        } = data[item.value];
+        const { timeStart: currentStart, checked: currentChecked } =
+          data[item.value];
 
         return (
           <div className="columns-settings py-2">
@@ -49,14 +47,13 @@ const DayList = ({ data, list, timeStart, timeEnd, onChange }: DayListType) => {
                 <div className="flex items-center">
                   <div>
                     <select
-                      id="countries"
+                      id="timeStart"
                       value={currentStart}
                       onChange={(e) => {
                         onChange({
                           ...data[item.value],
                           day: value,
                           timeStart: e.target.value,
-                          timeEnd: "",
                         });
                       }}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -79,15 +76,22 @@ const DayList = ({ data, list, timeStart, timeEnd, onChange }: DayListType) => {
                   <div className="px-2">-</div>
                   <div>
                     <select
-                      id="countries"
+                      id="timeEnd"
                       disabled
-                      value={currentEnd}
+                      value={currentStart}
                       className="bg-gray-50 disabled border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       <option>End Time</option>
                       {timeEnd.map((item) => {
-                        const { value, time } = item;
-                        return <option value={value}>{time}</option>;
+                        const { value, timeEnd } = item;
+                        return (
+                          <option
+                            selected={value === currentStart}
+                            value={value}
+                          >
+                            {timeEnd}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>

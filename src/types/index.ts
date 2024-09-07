@@ -6,6 +6,5 @@ export interface ScheduleData {
 export interface ScheduleDay {
   day: string;
   timeStart: string;
-  timeEnd: string;
   checked: boolean;
 }

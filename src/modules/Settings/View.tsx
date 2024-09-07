@@ -6,6 +6,7 @@ import "./View.styles.css";
 
 const Scheduler = () => {
   const {
+    duration,
     scheduleData,
     scheduleDay,
     timeEndList,
@@ -40,6 +41,7 @@ const Scheduler = () => {
                 timeStart={timeList}
                 timeEnd={timeEndList}
                 data={scheduleDay}
+                duration={duration}
               />
             </div>
           </dl>

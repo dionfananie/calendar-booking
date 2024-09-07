@@ -4,9 +4,10 @@ import { generateTimeSlots } from "../../helpers/generateTimeList";
 import { DAY_LIST, DURATION_LIST } from "../../constants/time";
 
 const initialDays: Record<string, ScheduleDay> = DAY_LIST.reduce((acc, day) => {
-  acc[day.value] = { timeStart: 0, timeEnd: 0, checked: false };
+  acc[day.value] = { day: "", timeStart: "", checked: false };
   return acc;
-}, {});
+}, {} as Record<string, ScheduleDay>);
+
 const useView = () => {
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
     duration: "duration-1",
@@ -17,6 +18,16 @@ const useView = () => {
     useState<Record<string, ScheduleDay>>(initialDays);
   console.log(scheduleDay);
 
+  const listDuration = DURATION_LIST.find(
+    (item) => item.value === scheduleData.duration
+  );
+
+  const timeList = generateTimeSlots(
+    7 * 60,
+    19 * 60,
+    listDuration?.duration || 30
+  );
+
   const handleChangeDuration = (value: Record<string, unknown>) => {
     setScheduleData((recentData) => ({ ...recentData, ...value }));
   };
@@ -24,20 +35,11 @@ const useView = () => {
     setScheduleDay((v) => ({ ...v, [data.day]: data }));
   };
 
-  const timeList = generateTimeSlots(7 * 60, 19 * 60, 30);
-  const selectedDuration = DURATION_LIST.find(
-    (item) => item.value === scheduleData.duration
-  );
-  const timeEndList = generateTimeSlots(
-    7 * 60,
-    19 * 60,
-    selectedDuration?.duration || 30
-  );
-
   return {
+    duration: listDuration?.duration || 30,
     scheduleData,
     scheduleDay,
-    timeEndList,
+    timeEndList: timeList,
     timeList,
     handleChangeDuration,
     handleChangeDay,
