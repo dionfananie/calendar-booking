@@ -1,11 +1,12 @@
+export const DAY_LIST_UNAVAILABLE = ["Saturday", "Sunday"];
 export const DAY_LIST = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  { name: "Monday", status: 1 },
+  { name: "Tuesday", status: 1 },
+  { name: "Wednesday", status: 1 },
+  { name: "Thursday", status: 1 },
+  { name: "Friday", status: 1 },
+  { name: "Saturday", status: 0 },
+  { name: "Sunday", status: 0 },
 ];
 
 export const DURATION_LIST = [
