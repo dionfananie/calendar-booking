@@ -1,23 +1,15 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
-const ThemeContext = createContext({});
+const BookingContext = createContext({});
 
 const BookingProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <BookingContext.Provider value={{}}>{children}</BookingContext.Provider>
   );
 };
 
-const useTheme = () => {
-  return useContext(ThemeContext);
+const useBooking = () => {
+  return useContext(BookingContext);
 };
 
-export { BookingProvider, useTheme };
+export { BookingProvider, useBooking };
