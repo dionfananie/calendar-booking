@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { ScheduleData, type ScheduleDay } from "../../types";
-import { generateTimeSlots } from "../../helpers/generateTimeList";
+import {
+  createDayjsFromData,
+  generateTimeSlots,
+  type TimeListType,
+} from "../../helpers/generateTimeList";
 import { DAY_LIST, DURATION_LIST } from "../../constants/time";
 
 const initialDays: Record<string, ScheduleDay> = DAY_LIST.reduce((acc, day) => {
@@ -32,6 +36,13 @@ const useView = () => {
     setScheduleData((recentData) => ({ ...recentData, ...value }));
   };
   const handleChangeDay = (data: ScheduleDay) => {
+    console.log(data);
+    const findTime = timeList.find((item) => item.value === data.timeStart);
+
+    const timeData = { day: data.day, time: findTime?.time || "" };
+    const parsedTime = createDayjsFromData(timeData);
+    console.log(parsedTime);
+
     setScheduleDay((v) => ({ ...v, [data.day]: data }));
   };
 

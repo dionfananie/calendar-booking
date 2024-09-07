@@ -103,7 +103,6 @@ const DayList = ({ data, list, timeStart, timeEnd, onChange }: DayListType) => {
                         ...data[item.value],
                         day: value,
                         timeStart: "",
-                        timeEnd: "",
                         checked: false,
                       });
                     }}
