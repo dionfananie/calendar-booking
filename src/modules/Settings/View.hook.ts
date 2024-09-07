@@ -23,12 +23,16 @@ const useView = () => {
   const selectedDuration = DURATION_LIST.find(
     (item) => item.value === scheduleData.duration
   );
-  const timeEndList = generateTimeSlots(7 * 60, 19 * 60, selectedDuration);
+  const timeEndList = generateTimeSlots(
+    7 * 60,
+    19 * 60,
+    selectedDuration?.duration || 0
+  );
 
   return {
     scheduleData,
     scheduleDay,
-    timeEndList
+    timeEndList,
     timeList,
     handleChangeDuration,
     handleChangeDay,
