@@ -2,7 +2,7 @@ export const generateTimeSlots = (
   startTime: number,
   endTime: number,
   interval: number
-) => {
+): string[] => {
   const times = [];
   let time = startTime;
 
@@ -21,6 +21,3 @@ export const generateTimeSlots = (
 
   return times;
 };
-
-const timeSlots = generateTimeSlots(7 * 60, 19 * 60, 30); // From 7 AM to 7 PM, 30-minute intervals
-console.log(timeSlots);

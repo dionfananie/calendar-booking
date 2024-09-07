@@ -3,15 +3,15 @@ import { ScheduleData } from "../../types";
 
 const useView = () => {
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
-    duration: 1,
+    duration: "",
     session: 1,
     withVideo: false,
   });
 
-  const handleChangeDuration = (key: string, value: number) => {
-    setScheduleData((recentData) => ({ ...recentData, [key]: value }));
+  const handleChangeDuration = (value: Record<string, unknown>) => {
+    setScheduleData((recentData) => ({ ...recentData, ...value }));
   };
-  return { handleChangeDuration };
+  return { scheduleData, handleChangeDuration };
 };
 
 export default useView;

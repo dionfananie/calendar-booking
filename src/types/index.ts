@@ -1,5 +1,5 @@
 export interface ScheduleData {
-  duration: number;
+  duration: string;
   withVideo: boolean;
   session: number;
 }

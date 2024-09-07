@@ -9,9 +9,9 @@ export const DAY_LIST = [
 ];
 
 export const DURATION_LIST = [
-  { value: 1, duration: 15 },
-  { value: 2, duration: 30 },
-  { value: 3, duration: 45 },
-  { value: 4, duration: 60 },
-  { value: 5, duration: 90 },
+  { value: "duration-1", duration: 15 },
+  { value: "duration-2", duration: 30 },
+  { value: "duration-3", duration: 45 },
+  { value: "duration-4", duration: 60 },
+  { value: "duration-5", duration: 90 },
 ];
