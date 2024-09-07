@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ScheduleData } from "../../types";
+import { ScheduleData, type ScheduleDay } from "../../types";
+import { generateTimeSlots } from "../../helpers/generateTimeList";
 
 const useView = () => {
   const [scheduleData, setScheduleData] = useState<ScheduleData>({
@@ -7,11 +8,25 @@ const useView = () => {
     session: 1,
     withVideo: false,
   });
+  const [scheduleDay, setScheduleDay] = useState<ScheduleDay[]>([]);
+  console.log(scheduleDay);
 
   const handleChangeDuration = (value: Record<string, unknown>) => {
     setScheduleData((recentData) => ({ ...recentData, ...value }));
   };
-  return { scheduleData, handleChangeDuration };
+  const handleChangeDay = (data: ScheduleDay) => {
+    setScheduleDay((v) => [...v, data]);
+  };
+
+  const timeList = generateTimeSlots(7 * 60, 19 * 60, 30);
+
+  return {
+    scheduleData,
+    scheduleDay,
+    timeList,
+    handleChangeDuration,
+    handleChangeDay,
+  };
 };
 
 export default useView;

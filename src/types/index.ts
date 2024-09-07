@@ -3,3 +3,8 @@ export interface ScheduleData {
   withVideo: boolean;
   session: number;
 }
+export interface ScheduleDay {
+  day: string;
+  timeStart: string;
+  timeEnd: string;
+}

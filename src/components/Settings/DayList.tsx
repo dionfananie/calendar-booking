@@ -1,21 +1,27 @@
 import type { DayList } from "../../constants/time/index.types";
+import type { TimeListType } from "../../helpers/generateTimeList";
+import type { ScheduleDay } from "../../types";
 
 interface DayListType {
   list: DayList;
-  timeStart: string[];
-  timeEnd: string[];
+  timeStart: TimeListType;
+  timeEnd: TimeListType;
+  onChange: (data: ScheduleDay) => void;
 }
-const DayList = ({ list, timeStart, timeEnd }: DayListType) => {
+const DayList = ({ list, timeStart, timeEnd, onChange }: DayListType) => {
   return (
     <>
       {list.map((item) => {
+        const { value } = item;
         return (
           <div className="columns-settings py-2">
             <div className="flex items-center">
               <input
-                id={`checked-checkbox-${item}`}
+                id={`checked-checkbox-${value}`}
                 type="checkbox"
-                value=""
+                onChange={() => {
+                  onChange({ day: item.value, timeStart: "", timeEnd: "" });
+                }}
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
               />
               <label
@@ -32,11 +38,20 @@ const DayList = ({ list, timeStart, timeEnd }: DayListType) => {
                   <div>
                     <select
                       id="countries"
+                      onChange={(e) => {
+                        console.log(e.target.value);
+                        onChange({
+                          day: value,
+                          timeStart: e.target.value,
+                          timeEnd: "",
+                        });
+                      }}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       <option selected>Select Time</option>
                       {timeStart.map((item) => {
-                        return <option value={item}>{item}</option>;
+                        const { value, time } = item;
+                        return <option value={value}>{time}</option>;
                       })}
                     </select>
                   </div>
@@ -48,7 +63,8 @@ const DayList = ({ list, timeStart, timeEnd }: DayListType) => {
                     >
                       <option selected>Select Time</option>
                       {timeEnd.map((item) => {
-                        return <option value={item}>{item}</option>;
+                        const { value, time } = item;
+                        return <option value={value}>{time}</option>;
                       })}
                     </select>
                   </div>

@@ -1,14 +1,17 @@
 import DayList from "../../components/Settings/DayList";
 import FormDuration from "../../components/Settings/FormDuration";
 import { DAY_LIST, DURATION_LIST } from "../../constants/time";
-import { generateTimeSlots } from "../../helpers/generateTimeList";
 import useView from "./View.hook";
 import "./View.styles.css";
 
 const Scheduler = () => {
-  const timeList = generateTimeSlots(7 * 60, 19 * 60, 30);
-
-  const { scheduleData, handleChangeDuration } = useView();
+  const {
+    scheduleData,
+    scheduleDay,
+    timeList,
+    handleChangeDuration,
+    handleChangeDay,
+  } = useView();
   return (
     <div className="bg-slate-100 w-full">
       <FormDuration
@@ -31,6 +34,7 @@ const Scheduler = () => {
           <dl className="text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
             <div className="flex flex-col pb-3">
               <DayList
+                onChange={handleChangeDay}
                 list={DAY_LIST}
                 timeStart={timeList}
                 timeEnd={timeList}
