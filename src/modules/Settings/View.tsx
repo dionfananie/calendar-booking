@@ -8,6 +8,7 @@ const Scheduler = () => {
   const {
     scheduleData,
     scheduleDay,
+    timeEndList,
     timeList,
     handleChangeDuration,
     handleChangeDay,
@@ -37,7 +38,7 @@ const Scheduler = () => {
                 onChange={handleChangeDay}
                 list={DAY_LIST}
                 timeStart={timeList}
-                timeEnd={timeList}
+                timeEnd={timeEndList}
               />
             </div>
           </dl>
